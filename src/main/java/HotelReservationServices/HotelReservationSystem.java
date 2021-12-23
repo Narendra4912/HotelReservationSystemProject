@@ -2,24 +2,17 @@ package HotelReservationServices;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class HotelReservationSystem {
 
     Map<String, Hotels> hotelsMap = new HashMap<>();
 
-    public void addHotels(String hotelName, Hotels hotel)
-    {
-
-        hotelsMap.putIfAbsent(hotelName, hotel);
-    }
-
-    public boolean collectHotelsList() {
-        if (hotelsMap.isEmpty())
-            return false;
+    public boolean collectHotelsList(ArrayList<Hotels> hotelsList) {
+        for (Hotels hotels : hotelsList)
+        {
+            hotelsMap.putIfAbsent(hotels.getHotelName(),hotels);
+        }
         return true;
     }
 
@@ -38,14 +31,11 @@ public class HotelReservationSystem {
         Hotels ridgewood = new Hotels("Ridgewood", 220);
 
         HotelReservationSystem hotels = new HotelReservationSystem();
+        ArrayList<Hotels> hotelsList = new ArrayList<>();
 
-        hotels.addHotels("Lakewood",lakewood);
-        hotels.addHotels("Bridgewood",bridgewood);
-        hotels.addHotels("Ridgewood",ridgewood);
-
-        hotelsMap.put("Lakewood",lakewood);
-        hotelsMap.put("Bridgewood",bridgewood);
-        hotelsMap.put("Ridgewood",ridgewood);
+        hotelsMap.putIfAbsent("Lakewood",lakewood);
+        hotelsMap.putIfAbsent("Bridgewood",bridgewood);
+        hotelsMap.putIfAbsent("Ridgewood",ridgewood);
 
 //        LocalDate localDate = LocalDate.of(date.getYear(),date.getMonth(), date.getDate());
 //        DayOfWeek dayOfWeek = localDate.getDayOfWeek();

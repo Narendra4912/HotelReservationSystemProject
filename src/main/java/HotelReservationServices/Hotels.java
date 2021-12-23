@@ -25,11 +25,20 @@ public class Hotels {
         return hotelRate;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Hotels{" +
+//                "hotelName='" + hotelName + '\'' +
+//                ", hotelRate=" + hotelRate +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Hotels{" +
                 "hotelName='" + hotelName + '\'' +
-                ", hotelRate=" + hotelRate +
+                ", weekdayRate=" + weekdayRate +
+                ", weekendRate=" + weekendRate +
                 '}';
     }
 }
