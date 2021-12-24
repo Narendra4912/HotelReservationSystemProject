@@ -103,14 +103,39 @@ public class HotelReservationTesting {
             Date endDate = format.parse(endDateString);
             String hotelDetails = hotels.cheapestHotelOnWeekdayWeekend(startDate,endDate);
             String expectedResult = "Hotel Name = Bridgewood Total Amount = 150";
-            Assert.assertEquals(expectedResult, hotelDetails);
+            Assert.assertEquals(expectedResult,hotelDetails);
             System.out.println(hotelDetails);
         }
         catch (Exception e)
         {
             System.out.println("Incorrect Date format");
         }
+    }
 
+    @Test
+    public void givenHotelWhenHotelRatingAddedReturnTrue() {
+        try
+        {
+            Hotels lakewood = new Hotels("Lakewood", 110,90,3);
+            Hotels bridgewood = new Hotels("Bridgewood", 150,50,4);
+            Hotels ridgewood = new Hotels("Ridgewood", 220,150,5);
 
+            ArrayList<Hotels> hotelsList = new ArrayList<>();
+            HotelReservationSystem hotels = new HotelReservationSystem();
+
+            hotelsList.add(lakewood);
+            hotelsList.add(bridgewood);
+            hotelsList.add(ridgewood);
+
+            boolean actualResult =  hotels.collectHotelsList(hotelsList);
+            hotels.showHotels();
+
+            boolean expectedResult = true;
+            Assert.assertEquals(expectedResult, actualResult);
+        }
+        catch (AssertionError e)
+        {
+            System.out.println("Please enter at least one hotel data");
+        }
     }
 }
