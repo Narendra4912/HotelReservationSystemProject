@@ -1,8 +1,10 @@
 package HotelReservationServices;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class HotelReservationSystem {
 
@@ -37,46 +39,75 @@ public class HotelReservationSystem {
         hotelsMap.putIfAbsent("Bridgewood",bridgewood);
         hotelsMap.putIfAbsent("Ridgewood",ridgewood);
 
-//        LocalDate localDate = LocalDate.of(date.getYear(),date.getMonth(), date.getDate());
-//        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         Map.Entry<String,Hotels> entry = hotelsMap.entrySet().iterator().next();
         Hotels ht = entry.getValue();
         int cheapestRate = ht.getHotelRate();
-        int totalRate=0;
+        int totalAmount=0;
         String hotelName = null;
 
-//        if(dayOfWeek.toString().equals(Calendar.SATURDAY) || dayOfWeek.toString().equals(Calendar.SUNDAY) )
-//            return null;
-//        else
-//        {
+        for(String hotel : hotelsMap.keySet()){
+            int hotelRate =hotelsMap.get(hotel).getHotelRate();
+            if(hotelRate < cheapestRate)
+            {
+                cheapestRate = hotelRate;
+                hotelName = hotelsMap.get(hotel).getHotelName();
+            }
+        }
+        totalAmount = cheapestRate * noOfDays;
+        return "Hotel Name = "+ hotelName + " Total Amount = "+ totalAmount;
+    }
+
+    public String cheapestHotelOnWeekdayWeekend(Date startDate, Date endDate)
+    {
+        Hotels lakewood = new Hotels("Lakewood", 110,90);
+        Hotels bridgewood = new Hotels("Bridgewood", 150,50);
+        Hotels ridgewood = new Hotels("Ridgewood", 220,150);
+
+        HotelReservationSystem hotels = new HotelReservationSystem();
+        ArrayList<Hotels> hotelsList = new ArrayList<>();
+
+        hotelsMap.putIfAbsent("Lakewood",lakewood);
+        hotelsMap.putIfAbsent("Bridgewood",bridgewood);
+        hotelsMap.putIfAbsent("Ridgewood",ridgewood);
+
+        String startDateDayName = new SimpleDateFormat("EEEE").format(startDate);
+        String endDateDayName = new SimpleDateFormat("EEEE").format(endDate);
+
+        long difference = endDate.getTime() - startDate.getTime();
+        int noOfDays = (int) TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS) + 1;
+
+        Map.Entry<String,Hotels> entry = hotelsMap.entrySet().iterator().next();
+        Hotels ht = entry.getValue();
+        int cheapestRate = ht.getWeekdayRate();
+        int totalAmount=0;
+        String hotelName = null;
+
+        if(startDateDayName.toString().equals("Saturday") || startDateDayName.toString().equals("Sunday")
+            || endDateDayName.toString().equals("Saturday") || endDateDayName.toString().equals("Sunday"))
+        {
             for(String hotel : hotelsMap.keySet()){
-                int hotelRate =hotelsMap.get(hotel).getHotelRate();
+                int hotelRate =hotelsMap.get(hotel).getWeekendRate();
                 if(hotelRate < cheapestRate)
                 {
                     cheapestRate = hotelRate;
                     hotelName = hotelsMap.get(hotel).getHotelName();
                 }
             }
-            totalRate = cheapestRate * noOfDays;
-            return "Hotel Name = "+ hotelName + " Total Rate = "+ totalRate;
- //       }
-
-//        if(dayOfWeek.toString().equals(Calendar.MONDAY) || dayOfWeek.toString().equals(Calendar.TUESDAY) ||
-//                dayOfWeek.toString().equals(Calendar.WEDNESDAY) || dayOfWeek.toString().equals(Calendar.THURSDAY) ||
-//                dayOfWeek.toString().equals(Calendar.FRIDAY))
-//        {
-//            for(String hotel : hotelsMap.keySet()){
-//                int hotelRate =hotelsMap.get(hotel).getHotelRate();
-//                if(hotelRate < cheapestRate)
-//                {
-//                    cheapestRate = hotelRate;
-//                    hotelName = hotelsMap.get(hotel).getHotelName();
-//                }
-//            }
-//            totalRate = cheapestRate * noOfDays;
-//            return "Hotel Name = "+ hotelName + " Total Rate = "+ totalRate;
-//        }
-//        else
-//            return null;
+            totalAmount = cheapestRate * noOfDays;
+            return "Hotel Name = "+ hotelName + " Total Amount = "+ totalAmount;
+        }
+        else
+        {
+            for(String hotel : hotelsMap.keySet()){
+                int hotelRate =hotelsMap.get(hotel).getWeekdayRate();
+                if(hotelRate < cheapestRate)
+                {
+                    cheapestRate = hotelRate;
+                    hotelName = hotelsMap.get(hotel).getHotelName();
+                }
+            }
+            totalAmount = cheapestRate * noOfDays;
+            return "Hotel Name = "+ hotelName + " Total Amount = "+ totalAmount;
+        }
     }
 }

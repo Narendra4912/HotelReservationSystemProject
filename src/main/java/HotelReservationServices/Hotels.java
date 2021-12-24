@@ -17,6 +17,14 @@ public class Hotels {
         this.weekendRate = weekendRate;
     }
 
+    public int getWeekdayRate() {
+        return weekdayRate;
+    }
+
+    public int getWeekendRate() {
+        return weekendRate;
+    }
+
     public String getHotelName() {
         return hotelName;
     }
