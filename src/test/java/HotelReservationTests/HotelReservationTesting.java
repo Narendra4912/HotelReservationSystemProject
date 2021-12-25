@@ -91,18 +91,17 @@ public class HotelReservationTesting {
 
     @Test
     public void givenHotelWhenSetDateReturnCheapestHotelName() throws ParseException {
-
         try
         {
             HotelReservationSystem hotels = new HotelReservationSystem();
-            String startDateString = "23-Dec-2021";
-            String endDateString = "25-Dec-2021";
+            String startDateString = "11-Sep-2020";
+            String endDateString = "12-Sep-2020";
 
             SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
             Date startDate = format.parse(startDateString);
             Date endDate = format.parse(endDateString);
             String hotelDetails = hotels.cheapestHotelOnWeekdayWeekend(startDate,endDate);
-            String expectedResult = "Hotel Name = Bridgewood Total Amount = 150";
+            String expectedResult = "Hotel Name = Bridgewood Total Amount = 100";
             Assert.assertEquals(expectedResult,hotelDetails);
             System.out.println(hotelDetails);
         }
@@ -136,6 +135,28 @@ public class HotelReservationTesting {
         catch (AssertionError e)
         {
             System.out.println("Please enter at least one hotel data");
+        }
+    }
+
+    @Test
+    public void givenHotelWhenSetDateReturnBestRatedCheapestHotelName() throws ParseException {
+        try
+        {
+            HotelReservationSystem hotels = new HotelReservationSystem();
+            String startDateString = "11-Sep-2020";
+            String endDateString = "12-Sep-2020";
+
+            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+            Date startDate = format.parse(startDateString);
+            Date endDate = format.parse(endDateString);
+            String hotelDetails = hotels.cheapestHotelOnWeekdayWeekendWithRating(startDate,endDate);
+            String expectedResult = "Hotel Name = Lakewood Total Amount = 100 Rating = 4";
+            Assert.assertEquals(expectedResult,hotelDetails);
+            System.out.println(hotelDetails);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Incorrect Date format");
         }
     }
 }

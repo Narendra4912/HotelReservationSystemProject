@@ -32,6 +32,10 @@ public class Hotels {
         return weekendRate;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
     public String getHotelName() {
         return hotelName;
     }
